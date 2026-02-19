@@ -1,185 +1,193 @@
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const roles = [
-    "Machine Learning Engineer",
-    "Software Developer",
-    "ML Systems Builder",
-    "Backend & AI Engineer"
-  ];
 
+  /* ===== ROLE TYPING EFFECT ===== */
   const [text, setText] = useState("");
   const [roleIndex, setRoleIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
-  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const current = roles[roleIndex];
-    let speed = deleting ? 40 : 70;
+    const roles = [
+  "Machine Learning & Backend Engineer",
+  "ML Systems Developer",
+  "Building Production ML Systems",
+   ];
 
-    const timer = setTimeout(() => {
-      if (!deleting) {
-        setText(current.slice(0, charIndex + 1));
-        setCharIndex((c) => c + 1);
+    const typingSpeed = 60;
+    const pauseTime = 1500;
 
-        if (charIndex === current.length) {
-          setDeleting(true);
-          speed = 1200; // pause before deleting
-        }
+    const timeout = setTimeout(() => {
+      if (charIndex < roles[roleIndex].length) {
+        setText(prev => prev + roles[roleIndex][charIndex]);
+        setCharIndex(prev => prev + 1);
       } else {
-        setText(current.slice(0, charIndex - 1));
-        setCharIndex((c) => c - 1);
-
-        if (charIndex === 0) {
-          setDeleting(false);
-          setRoleIndex((i) => (i + 1) % roles.length);
-        }
+        setTimeout(() => {
+          setText("");
+          setCharIndex(0);
+          setRoleIndex(prev => (prev + 1) % roles.length);
+        }, pauseTime);
       }
-    }, speed);
+    }, typingSpeed);
 
-    return () => clearTimeout(timer);
-  }, [charIndex, deleting, roleIndex, roles]);
+    return () => clearTimeout(timeout);
+  }, [charIndex, roleIndex]);
 
+  /* ===== PAGE ===== */
   return (
-    <div style={wrapper}>
-      <div style={hero}>
+    <section style={heroWrap}>
+      <div style={heroInner}>
 
         {/* PHOTO */}
-        <div style={imgWrap}>
+        <div style={photoWrap}>
           <img
-            src="/photo.jpg"   // 👈 put your image in public folder and rename if needed
+            src="/profile.jpg"
             alt="Sohini"
-            style={img}
+            style={photo}
           />
         </div>
 
         {/* TEXT SIDE */}
         <div style={textWrap}>
+
           <h1 style={name}>
-            Manne Sohini <br /> Amrutha Varshini
+            Manne Sohini <br />
+            Amrutha Varshini
           </h1>
 
-          {/* TYPING ROLE */}
           <h2 style={role}>
             {text}
             <span style={cursor}>|</span>
           </h2>
 
-          <p style={intro}>
-            I build production-ready software and machine learning systems,
-            focusing on real-world deployment rather than just experiments.
-            My work spans ML pipelines, backend services, and full-stack
-            applications that solve practical problems.
+          <p style={summary}>
+            I build production-ready machine learning systems and scalable
+            software applications, focusing on real-world deployment,
+            streaming pipelines, and backend architecture rather than just
+            experimentation.
           </p>
 
           <div style={divider}></div>
 
-          <div style={snapshot}>
-            <div style={chip}>B.Tech CSE — SRMIST</div>
-            <div style={chip}>CGPA 9+</div>
-            <div style={chip}>ML + SWE Systems</div>
-            <div style={chip}>Real-time Pipelines</div>
-            <div style={chip}>Hackathon Top-25</div>
+          <div style={pillWrap}>
+            <span style={pill}>B.Tech CSE — SRMIST</span>
+            <span style={pill}>CGPA 9+</span>
+            <span style={pill}>ML + SWE Systems</span>
+            <span style={pill}>Hackathon Top-25</span>
+          </div>
+
+          <div style={ctaWrap}>
+            <a href="/projects" style={ctaBtn}>
+            View My Work 
+            </a>
           </div>
 
 
         </div>
+
       </div>
-    </div>
+    </section>
   );
 }
 
-/* ---------- STYLES ---------- */
+/* ================= HERO STYLES ================= */
 
-const wrapper = {
-  minHeight: "calc(100vh - 70px)",
+const heroWrap = {
+  padding: "90px 24px",
+};
+
+const heroInner = {
+  maxWidth: "1100px",
+  margin: "0 auto",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  padding: "40px",
-};
-
-const hero = {
-  display: "flex",
-  alignItems: "center",
   gap: "60px",
-  maxWidth: "1100px",
-  width: "100%",
+  flexWrap: "wrap",
 };
 
-const imgWrap = {
+const photoWrap = {
   flexShrink: 0,
 };
 
-const img = {
-  width: "300px",
-  height: "300px",
+const photo = {
+  width: "240px",
+  height: "240px",
   borderRadius: "50%",
   objectFit: "cover",
-  objectPosition: "center 5%",   // 👈 key change (move image DOWN so head shows)
-  border: "4px solid #1f2937",
-  boxShadow: "0 0 40px rgba(96,165,250,0.25)",
+  objectPosition: "center 18%",
+  border: "3px solid rgba(255,255,255,0.06)",
+  background: "#020617",
+  boxShadow: `
+    0 0 0 6px #020617,
+    0 0 40px rgba(96,165,250,0.18),
+    inset 0 0 30px rgba(2,6,23,0.6)
+  `,
 };
 
-
 const textWrap = {
-  maxWidth: "600px",
+  maxWidth: "560px",
 };
 
 const name = {
-  fontSize: "52px",
-  lineHeight: "1.1",
-  marginBottom: "16px",
-  background: "linear-gradient(90deg,#60a5fa,#a78bfa,#67e8f9)",
+  fontSize: "46px",
+  fontWeight: 700,
+  lineHeight: 1.15,
+  background: "linear-gradient(to right,#60a5fa,#a78bfa)",
   WebkitBackgroundClip: "text",
   color: "transparent",
 };
 
 const role = {
-  fontSize: "24px",
-  marginBottom: "18px",
-  opacity: 0.9,
-  minHeight: "32px",
+  marginTop: "12px",
+  fontSize: "20px",
+  color: "#d1d5db",
+  minHeight: "26px",
 };
 
 const cursor = {
-  marginLeft: "6px",
-  animation: "blink 1s infinite",
+  opacity: 0.7,
+  marginLeft: "4px",
 };
 
-const intro = {
-  opacity: 0.85,
+const summary = {
+  marginTop: "16px",
+  color: "#9ca3af",
   lineHeight: "1.7",
 };
 
 const divider = {
-  marginTop: "24px",
   width: "120px",
   height: "2px",
-  background: "#374151",
+  background: "rgba(255,255,255,0.2)",
+  marginTop: "22px",
 };
-const snapshot = {
-  marginTop: "28px",
+
+const pillWrap = {
   display: "flex",
   flexWrap: "wrap",
   gap: "10px",
+  marginTop: "22px",
 };
 
-const chip = {
-  padding: "8px 14px",
+const pill = {
+  padding: "6px 14px",
+  background: "rgba(255,255,255,0.06)",
   borderRadius: "999px",
-  background: "rgba(255,255,255,0.05)",
-  border: "1px solid rgba(255,255,255,0.08)",
   fontSize: "13px",
-  opacity: 0.9,
 };
 
+const ctaWrap = {
+  marginTop: "36px",
+};
 
-/* blinking cursor animation */
-const style = document.createElement("style");
-style.innerHTML = `
-@keyframes blink {
-  0%, 50%, 100% { opacity: 1 }
-  25%, 75% { opacity: 0 }
-}`;
-document.head.appendChild(style);
+const ctaBtn = {
+  display: "inline-block",
+  padding: "12px 22px",
+  borderRadius: "10px",
+  background: "linear-gradient(90deg,#7dd3fc,#a78bfa)",
+  color: "#020617",
+  textDecoration: "none",
+  fontWeight: 600,
+  fontSize: "14px",
+};

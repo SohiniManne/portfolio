@@ -1,105 +1,111 @@
-import { motion } from "framer-motion";
-import { FaBrain, FaServer, FaTools } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export default function Skills() {
   return (
-    <div style={container}>
+    <div style={wrap}>
 
-      {/* HEADER */}
-      <motion.div
-        initial={{opacity:0, y:20}}
-        animate={{opacity:1, y:0}}
-        transition={{duration:0.6}}
-      >
-        <h1 style={title}>Skills & Tech Stack</h1>
-        <p style={subtitle}>
-          Technologies I use to build production-ready ML systems,
-          scalable backends, and full-stack applications.
-        </p>
-      </motion.div>
+      {/* ===== HEADER ===== */}
+      <h1 style={title}>Skills & Technical Focus</h1>
 
-      {/* CARDS */}
-      <div style={grid}>
+      <p style={intro}>
+        My work focuses on building production-ready machine learning systems
+        and scalable backend applications. Below are the technologies I actively
+        use, grouped by how they contribute to real systems rather than as a
+        flat list of tools.
+      </p>
 
-        {/* ML */}
-        <SkillCard
-          icon={<FaBrain />}
-          title="Machine Learning"
-          skills={[
-            "Python", "PyTorch","TensorFlow","NLP",
-            "Graph Learning","Forecasting",
-            "Feature Engineering","Deployment",
-            "Experiment Tracking"
-          ]}
-        />
+      {/* ===== CORE SKILLS ===== */}
+      <Section
+        heading="Core Engineering Skills"
+        items={[
+          {
+            title: "Machine Learning Systems",
+            desc: "Model development, NLP pipelines, graph learning, forecasting, and deployment workflows.",
+            stack: ["PyTorch","TensorFlow","NLP","Graph Learning","Feature Engineering","Model Deployment"],
+            projects: ["NeuroGraph","FactLens","AnomalyGuard"]
+          },
+          {
+            title: "Backend & Infrastructure",
+            desc: "Designing scalable APIs, streaming data systems, and real-time services.",
+            stack: ["Python","FastAPI","REST APIs","WebSockets","Streaming Pipelines","System Design"],
+            projects: ["Nivio","Aegis-ML"]
+          }
+        ]}
+      />
 
-        {/* BACKEND */}
-        <SkillCard
-          icon={<FaServer />}
-          title="Backend & Systems"
-          skills={[
-            "Python","C/C++", "Java",
-            "FastAPI","REST APIs","Kafka",
-            "Streaming Pipelines",
-            "WebSockets","System Design"
-          ]}
-        />
+      {/* ===== APPLIED STACK ===== */}
+      <Section
+        heading="Applied Development Stack"
+        items={[
+          {
+            title: "Full-Stack & Data",
+            desc: "Tools used to build dashboards, integrations, and complete applications.",
+            stack: ["React","JavaScript","Node.js","SQL","Streamlit","Data Processing"]
+          },
+        ]}
+      />
 
-        {/* TOOLS */}
-        <SkillCard
-          icon={<FaTools />}
-          title="Full Stack & Tools"
-          skills={[
-            "React","JavaScript","SQL",
-            "Node.js","Git","Streamlit",
-            "AWS","Linux","Debugging"
-          ]}
-        />
+      {/* ===== ENVIRONMENT ===== */}
+      <Section
+        heading="Environment & Workflow"
+        items={[
+          {
+            title: "Tooling & Systems",
+            desc: "Supporting technologies used in daily development and deployment workflows.",
+            stack: ["Docker","Git","Linux","Debugging","Experiment Tracking","Cloud Basics"]
+          }
+        ]}
+      />
 
-      </div>
-
-      {/* CTA */}
-      <motion.div
-        initial={{opacity:0}}
-        animate={{opacity:1}}
-        transition={{delay:0.6}}
-        style={{textAlign:"center", marginTop:"60px"}}
-      >
-        <p style={{color:"#9ca3af", marginBottom:"16px"}}>
-          See how I apply these skills in real projects.
+      {/* ===== CTA ===== */}
+      <div style={cta}>
+        <p style={{color:"#9ca3af"}}>
+          See how these skills come together in real projects.
         </p>
 
-        <Link to="/projects" style={button}>
+        <Link to="/projects" style={btn}>
           View Projects →
         </Link>
-      </motion.div>
+      </div>
 
     </div>
   );
 }
 
-function SkillCard({ icon, title, skills }) {
-  return (
-    <motion.div
-      whileHover={{y:-4}}
-      style={card}
-    >
-      <div style={iconStyle}>{icon}</div>
-      <h3 style={cardTitle}>{title}</h3>
+/* ===== SECTION COMPONENT ===== */
 
-      <div style={chipWrap}>
-        {skills.map((s,i)=>(
-          <span key={i} style={chip}>{s}</span>
+function Section({ heading, items }) {
+  return (
+    <div style={{marginTop:"55px"}}>
+      <h2 style={sectionTitle}>{heading}</h2>
+
+      <div style={grid}>
+        {items.map((it,i)=>(
+          <div key={i} style={card}>
+            <h3 style={cardTitle}>{it.title}</h3>
+            <p style={desc}>{it.desc}</p>
+
+            <div style={chips}>
+              {it.stack.map((s,j)=>(
+                <span key={j} style={chip}>{s}</span>
+              ))}
+            </div>
+
+            {it.projects && (
+              <p style={projLine}>
+                Used in: {it.projects.join(", ")}
+              </p>
+            )}
+          </div>
         ))}
       </div>
-    </motion.div>
+    </div>
   );
 }
 
-/* ================= STYLES ================= */
+/* ===== STYLES ===== */
 
-const container = {
+const wrap = {
   maxWidth:"1100px",
   margin:"0 auto",
   padding:"80px 24px",
@@ -110,38 +116,44 @@ const title = {
   fontWeight:700,
 };
 
-const subtitle = {
+const intro = {
   marginTop:"12px",
   color:"#9ca3af",
-  maxWidth:"600px",
+  maxWidth:"650px",
+  lineHeight:1.6,
+};
+
+const sectionTitle = {
+  fontSize:"24px",
+  marginBottom:"18px",
 };
 
 const grid = {
   display:"grid",
   gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",
-  gap:"28px",
-  marginTop:"50px",
+  gap:"26px",
 };
 
 const card = {
-  background:"rgba(255,255,255,0.03)",
+  background:"rgba(255,255,255,0.04)",
   border:"1px solid rgba(255,255,255,0.08)",
+  padding:"26px",
   borderRadius:"14px",
-  padding:"28px",
-};
-
-const iconStyle = {
-  fontSize:"22px",
-  color:"#7dd3fc",
-  marginBottom:"14px",
 };
 
 const cardTitle = {
   fontSize:"18px",
-  marginBottom:"12px",
+  marginBottom:"6px",
 };
 
-const chipWrap = {
+const desc = {
+  color:"#9ca3af",
+  fontSize:"14px",
+  lineHeight:1.5,
+  marginBottom:"14px",
+};
+
+const chips = {
   display:"flex",
   flexWrap:"wrap",
   gap:"8px",
@@ -155,11 +167,24 @@ const chip = {
   fontSize:"12px",
 };
 
-const button = {
+const projLine = {
+  marginTop:"12px",
+  fontSize:"13px",
+  color:"#93c5fd",
+};
+
+const cta = {
+  marginTop:"70px",
+  textAlign:"center",
+};
+
+const btn = {
+  display:"inline-block",
+  marginTop:"10px",
   padding:"12px 22px",
   borderRadius:"10px",
   background:"linear-gradient(90deg,#7dd3fc,#a78bfa)",
-  color:"#000",
+  color:"#020617",
   textDecoration:"none",
   fontWeight:600,
 };
