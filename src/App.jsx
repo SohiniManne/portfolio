@@ -11,6 +11,8 @@ import Resume from "./pages/Resume";
 import Projects from "./pages/Projects";
 import Education from "./pages/Education";
 import Contact from "./pages/Contact";
+import Skills from "./pages/Skills";
+
 
 
 function App() {
@@ -19,6 +21,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/skills" element={<Skills />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/resume" element={<Resume />} />
         <Route path="/education" element={<Education />} />

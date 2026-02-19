@@ -1,11 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export default function Navbar() {
+
+  const linkStyle = ({ isActive }) => ({
+    textDecoration: "none",
+    color: isActive ? "#ffffff" : "#9ca3af",
+    fontWeight: isActive ? 600 : 400,
+    fontSize: "14px",
+  });
+
   return (
     <nav style={nav}>
       <div style={inner}>
 
-        {/* LEFT LOGO / NAME */}
+        {/* LEFT NAME */}
         <Link to="/" style={logo}>
           Sohini Manne
         </Link>
@@ -13,22 +21,46 @@ export default function Navbar() {
         {/* RIGHT LINKS */}
         <div style={right}>
 
-          <Link to="/" style={link}>Home</Link>
-          <Link to="/projects" style={link}>Projects</Link>
-          <Link to="/resume" style={link}>Resume</Link>
-          <Link to="/education" style={link}>Education & Experience</Link>
-          <Link to="/contact" style={link}>Contact</Link>
+          <NavLink to="/skills" end style={linkStyle}>
+            Skills
+          </NavLink>
 
-          {/* SOCIAL ICONS */}
-          <a href="https://github.com/SohiniManne" target="_blank" rel="noreferrer" style={icon}>
+          <NavLink to="/projects" end style={linkStyle}>
+            Projects
+          </NavLink>
+
+          <NavLink to="/resume" end style={linkStyle}>
+            Resume
+          </NavLink>
+
+          <NavLink to="/education" end style={linkStyle}>
+            Education & Experience
+          </NavLink>
+
+          <NavLink to="/contact" end style={linkStyle}>
+            Contact
+          </NavLink>
+
+          {/* SOCIAL LINKS */}
+          <a
+            href="https://github.com/SohiniManne"
+            target="_blank"
+            rel="noreferrer"
+            style={icon}
+          >
             GitHub
           </a>
-          <a href="https://www.linkedin.com/in/sohinimanne" target="_blank" rel="noreferrer" style={icon}>
+
+          <a
+            href="https://www.linkedin.com/in/sohinimanne"
+            target="_blank"
+            rel="noreferrer"
+            style={icon}
+          >
             LinkedIn
           </a>
 
         </div>
-
       </div>
     </nav>
   );
@@ -65,12 +97,6 @@ const right = {
   display: "flex",
   gap: "22px",
   alignItems: "center",
-};
-
-const link = {
-  textDecoration: "none",
-  color: "#cbd5f5",
-  fontSize: "14px",
 };
 
 const icon = {
